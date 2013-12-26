@@ -83,3 +83,5 @@ obj-$(CONFIG_TOUCHSCREEN_MMS134S)    += mms134s/
 obj-$(CONFIG_TOUCHSCREEN_MSG2138)	+= msg2138.o
 obj-$(CONFIG_TOUCHSCREEN_BT532_TS)    += bt532_ts.o
 obj-$(CONFIG_TOUCHSCREEN_BAFFINE_LITE_VE_IST3038) += baffine_lite_ve_ist3038/
+obj-$(CONFIG_TOUCHSCREEN_SWEEP2WAKE)                += sweep2wake.o
+obj-$(CONFIG_TOUCHSCREEN_DOUBLETAP2WAKE)        += doubletap2wake.o
