@@ -128,3 +128,7 @@ obj-$(CONFIG_CEPH_FS)		+= ceph/
 obj-$(CONFIG_PSTORE)		+= pstore/
 obj-$(CONFIG_EFIVAR_FS)		+= efivarfs/
 obj-$(CONFIG_EXFAT_FS)		+= exfat/
+
+# Patched by YAFFS
+obj-$(CONFIG_YAFFS_FS)		+= yaffs2/
+obj-$(CONFIG_DYNAMIC_FSYNC)  += dyn_sync_cntrl.o
