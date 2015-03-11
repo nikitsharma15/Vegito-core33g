@@ -71,3 +71,4 @@ obj-$(CONFIG_SPRD_SRT_KO)		+= sprd_srt/
 obj-$(CONFIG_BENCHMARK)  += benchmark/
 obj-$(CONFIG_BOOT_PERF)  += bootperf/
 obj-y	+= sprd_board_type.o
+obj-$(CONFIG_UID_CPUTIME) += uid_cputime.o
