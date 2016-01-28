@@ -21,6 +21,7 @@
 #include "sprdfb_panel.h"
 #include "sprdfb_dispc_reg.h"
 #include "sprdfb_lcdc_reg.h"
+#include <linux/display_state.h>
 
 static LIST_HEAD(panel_list_main);
 static LIST_HEAD(panel_list_sub);
@@ -36,6 +37,13 @@ extern struct panel_if_ctrl sprdfb_mipi_ctrl;
 #endif
 extern void sprdfb_panel_remove(struct sprdfb_device *dev);
 
+bool display_on = true;
+
+bool is_display_on(void)
+{
+ 	return display_on;
+}
+ 
 #ifdef CONFIG_FB_SC8825
 typedef struct {
 	uint32_t reg;
@@ -154,6 +162,8 @@ static int panel_reset(struct sprdfb_device *dev)
 		pr_err("%s, no dev\n", __func__);
 		return -1;
 	}
+  
+        display_on = true;
 
 	pr_debug("%s, enter\n", __func__);
 
@@ -173,6 +183,8 @@ static int panel_sleep(struct sprdfb_device *dev)
 		pr_err("%s, no dev\n", __func__);
 		return -1;
 	}
+
+        display_on = false;
 
 	pr_debug("%s, enter\n", __func__);
 
