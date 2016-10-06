@@ -393,7 +393,8 @@ static irqreturn_t SM5701_irq_thread(int irq, void *irq_data)
 	struct SM5701_charger_data *charger = irq_data;
 	pr_info("*** %s ***\n", __func__);
 	// Temporary delay of the interrupt to prevent MUIC interrupt running after it
-	schedule_delayed_work(&charger->isr_work, HZ * 0);
+	queue_delayed_work(system_power_efficient_wq,
+                &charger->isr_work, HZ * 0);
 	return IRQ_HANDLED;
 }
 
