@@ -1964,6 +1964,8 @@ static __le16 ext4_group_desc_csum(struct ext4_sb_info *sbi, __u32 block_group,
 	/* old crc16 code */
 	offset = offsetof(struct ext4_group_desc, bg_checksum);
 
+	offset = offsetof(struct ext4_group_desc, bg_checksum);
+
 	crc = crc16(~0, sbi->s_es->s_uuid, sizeof(sbi->s_es->s_uuid));
 	crc = crc16(crc, (__u8 *)&le_group, sizeof(le_group));
 	crc = crc16(crc, (__u8 *)gdp, offset);

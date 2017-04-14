@@ -73,6 +73,7 @@ struct snd_timer_user {
 	struct timespec tstamp;		/* trigger tstamp */
 	wait_queue_head_t qchange_sleep;
 	struct fasync_struct *fasync;
+        struct mutex ioctl_lock;
 	struct mutex tread_sem;
 };
 

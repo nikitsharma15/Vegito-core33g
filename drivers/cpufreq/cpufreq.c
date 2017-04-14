@@ -31,7 +31,6 @@
 #include <linux/completion.h>
 #include <linux/mutex.h>
 #include <linux/syscore_ops.h>
-#include <linux/err.h>
 
 #include <trace/events/power.h>
 
@@ -622,19 +621,18 @@ static ssize_t show_bios_limit(struct cpufreq_policy *policy, char *buf)
 }
 
 static ssize_t show_UV_mV_table(struct cpufreq_policy *policy, char *buf) {
-	if(!IS_ERR_OR_NULL(cpufreq_driver->volt_control)) {
-		return cpufreq_driver->volt_control->get(buf);
-	}
-	return 0;
+ 	if(cpufreq_driver->volt_control) {
+ 		return cpufreq_driver->volt_control->get(buf);
+ 	}
+ 	return 0;
 }
 
 static ssize_t store_UV_mV_table(struct cpufreq_policy *policy, const char *buf, size_t count) {
-	if(!IS_ERR_OR_NULL(cpufreq_driver->volt_control)) {
-		cpufreq_driver->volt_control->set(buf);
-	}
-	return count;
+ 	if(cpufreq_driver->volt_control) {
+ 		cpufreq_driver->volt_control->set(buf);
+ 	}
+ 	return count;
 }
-
 
 cpufreq_freq_attr_ro_perm(cpuinfo_cur_freq, 0400);
 cpufreq_freq_attr_ro(cpuinfo_min_freq);
@@ -664,7 +662,7 @@ static struct attribute *default_attrs[] = {
 	&scaling_driver.attr,
 	&scaling_available_governors.attr,
 	&scaling_setspeed.attr,
-	&UV_mV_table.attr,
+        &UV_mV_table.attr,
 	NULL
 };
 

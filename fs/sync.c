@@ -16,7 +16,7 @@
 #include <linux/quotaops.h>
 #include <linux/backing-dev.h>
 #include "internal.h"
-#include <trace/events/mmcio.h>
+
 #ifdef CONFIG_DYNAMIC_FSYNC
 extern bool power_suspend_active;
 extern bool dyn_fsync_active;
@@ -93,6 +93,7 @@ static void fdatawait_one_bdev(struct block_device *bdev, void *arg)
 {
 	filemap_fdatawait(bdev->bd_inode->i_mapping);
 }
+
 
 #ifdef CONFIG_DYNAMIC_FSYNC
 /*
@@ -197,9 +198,6 @@ SYSCALL_DEFINE1(syncfs, int, fd)
  */
 int vfs_fsync_range(struct file *file, loff_t start, loff_t end, int datasync)
 {
-	if (!file->f_op || !file->f_op->fsync)
-		return -EINVAL;
-	return file->f_op->fsync(file, start, end, datasync);
 #ifdef CONFIG_DYNAMIC_FSYNC
 	if (likely(dyn_fsync_active && !power_suspend_active))
 		return 0;

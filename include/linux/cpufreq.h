@@ -234,8 +234,8 @@ void cpufreq_unregister_governor(struct cpufreq_governor *governor);
 
 struct freq_attr;
 struct vdd_levels_control {
-     ssize_t (*get) (char *buf);
-     void (*set) (const char *buf);
+      ssize_t (*get) (char *buf);
+      void (*set) (const char *buf);
 };
 
 struct cpufreq_driver {
@@ -272,8 +272,7 @@ struct cpufreq_driver {
 	int	(*suspend)	(struct cpufreq_policy *policy);
 	int	(*resume)	(struct cpufreq_policy *policy);
 	struct freq_attr	**attr;
-
-	struct vdd_levels_control *volt_control;
+        struct vdd_levels_control *volt_control; 
 };
 
 /* flags */

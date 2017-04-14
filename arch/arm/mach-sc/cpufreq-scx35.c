@@ -226,18 +226,18 @@ static struct cpufreq_table_data sc8830_cpufreq_table_data_es = {
 
 static struct cpufreq_table_data sc8830t_cpufreq_table_data_es = {
 	.freq_tbl = {
-                {NOC, 1300000},
-		{UC1, 1200000},
-		{UC2, 1000000},
-		{UC3, SHARK_TDPLL_FREQUENCY},
-		{EC, CPUFREQ_TABLE_END},
+                {NOC, 1400000},
+                {UC1, 1200000},
+                {UC2, 1000000},
+                {UC3, SHARK_TDPLL_FREQUENCY},
+                {EC, CPUFREQ_TABLE_END},
 	},
 	.vddarm_mv = {
-                [NOC] = 1050000, 
-		[UC1] = 1000000,
-		[UC2] = 900000,
-		[UC3] = 900000,
-		[EC]  = 900000,
+                [NOC] = 1050000,
+                [UC1] = 1000000,
+                [UC2] = 900000,
+                [UC3] = 900000,
+                [EC]  = 900000,
 	},
 };
 
@@ -582,17 +582,17 @@ static struct freq_attr *sprd_cpufreq_attr[] = {
 };
 
 ssize_t sprd_vdd_get(char *buf) {
-	int i, len = 0;
-
+ 	int i, len = 0;
+ 
 #define freq_table sprd_cpufreq_conf->freq_tbl[i].frequency
 #define voltage_table sprd_cpufreq_conf->vddarm_mv[i]
- 
- 	for (i = 0; i <= MAX_UC; i++) {
- 		len += sprintf(buf + len, "%umhz: %lu mV\n", freq_table / 1000, voltage_table / 1000);
+
+	for (i = 0; i <= MAX_UC; i++) {
+		len += sprintf(buf + len, "%umhz: %lu mV\n", freq_table / 1000, voltage_table / 1000);
 	}
- 	return len;
+	return len;
 }
- 
+
 void sprd_vdd_set(const char *buf) {
  	int ret = -EINVAL;
  	int i = 0;
@@ -604,23 +604,23 @@ void sprd_vdd_set(const char *buf) {
  		ret = sscanf(buf, "%d%n", &val, &consumed);
  		if (ret > 0) {
  			buf += consumed;
-			u[j++] = val;
-		}
-		else {
-			break;
-		}
-	}
-
-	for (i = 0; i < j; i++) {
-		if (u[i] > MAX_VOLT / 1000) {
-			u[i] = MAX_VOLT / 1000;
-		}
-         if( u[i] % 25 == 0 ) {
-		 sprd_cpufreq_conf->vddarm_mv[i] = u[i] * 1000; }
-	}
-   return;
-}
+ 			u[j++] = val;
+ 		}
+ 		else {
+ 			break;
+ 		}
+ 	}
  
+ 	for (i = 0; i < j; i++) {
+ 		if (u[i] > MAX_VOLT / 1000) {
+ 			u[i] = MAX_VOLT / 1000;
+ 		}
+          if( u[i] % 25 == 0 ) {
+ 		 sprd_cpufreq_conf->vddarm_mv[i] = u[i] * 1000; }
+ 	}
+    return;
+}
+
 static struct vdd_levels_control sprd_vdd_control = {
       .get = sprd_vdd_get,
       .set = sprd_vdd_set,
