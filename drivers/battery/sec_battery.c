@@ -11,8 +11,14 @@
  */
 
 
+#ifdef CONFIG_SUPER_CHARGER_CONTROL
+#include "super_charger_control.h"
+int cust_ac_lev = AC_DEFAULT_LEVEL; 
+#endif 
+
 #include <linux/battery/sec_battery.h>
 #if defined(CONFIG_MACH_CORSICA_VE) || defined(CONFIG_MACH_VIVALTO)
+
 extern int get_hw_rev();
 #endif
 //extern int sprdbat_creat_caliberate_attr(struct device *dev);
@@ -1559,18 +1565,30 @@ static void sec_bat_get_battery_info(
 	value.intval = SEC_BATTEY_CURRENT_MA;
 	psy_do_property(battery->pdata->fuelgauge_name, get,
 		POWER_SUPPLY_PROP_CURRENT_NOW, value);
-	battery->current_now = value.intval;
-
+#ifdef CONFIG_SUPER_CHARGER_CONTROL
+        if(super_charge) 
+        battery->current_now = cust_ac_lev;
+        else
+ 	battery->current_now = value.intval;
+#else
+        battery->current_now = value.intval; 
+#endif
+        /* avergae current limit in charger */ 
 	value.intval = SEC_BATTEY_CURRENT_MA;
 	psy_do_property(battery->pdata->fuelgauge_name, get,
 		POWER_SUPPLY_PROP_CURRENT_AVG, value);
-	battery->current_avg = value.intval;
-
+        battery->current_avg = value.intval;
 	/* input current limit in charger */
 	psy_do_property(battery->pdata->charger_name, get,
 		POWER_SUPPLY_PROP_CURRENT_MAX, value);
+#ifdef CONFIG_SUPER_CHARGER_CONTROL
+        if(super_charge)  
+        battery->current_max = cust_ac_lev;
+        else
+        battery->current_max = value.intval;
+#else
 	battery->current_max = value.intval;
-
+#endif
 	/* To get SOC value (NOT raw SOC), need to reset value */
 	value.intval = 0;
 	psy_do_property(battery->pdata->fuelgauge_name, get,
