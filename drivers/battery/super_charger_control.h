@@ -16,7 +16,7 @@ extern int cust_ac_lev;
 extern int super_charge;
 
 
-#define AC_DEFAULT_LEVEL 900
+#define AC_DEFAULT_LEVEL 700
 
 #define AC_MIN_LEVEL 100
-#define AC_MAX_LEVEL 1200
+#define AC_MAX_LEVEL 1000
