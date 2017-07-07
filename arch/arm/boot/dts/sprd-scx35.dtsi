@@ -309,10 +309,10 @@
 		id = <0>;
 		interrupts = <0 26 0x0>;
 		reg = <0xf5260000 0x1000>;
-		trip_points_active = <80 88 100>;
-		trip_points_lowoff = <72 72 81>;
+		trip_points_active = <60 65 85 100>;
+		trip_points_lowoff = <0 55 60 80>;
 		trip_points_critical = <110>;
-		trip_num = <4>;
+		trip_num = <5>;
 	};
 
 	sprd_thermal1{
