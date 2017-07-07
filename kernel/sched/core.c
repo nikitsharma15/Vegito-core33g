@@ -86,10 +86,6 @@
 #include "../workqueue_internal.h"
 #include "../smpboot.h"
 
-#include "sched.h"
-#include "../workqueue_internal.h"
-#include "../smpboot.h"
-
 #define CREATE_TRACE_POINTS
 #include <trace/events/sched.h>
 
