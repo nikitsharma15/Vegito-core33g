@@ -226,14 +226,14 @@ static struct cpufreq_table_data sc8830_cpufreq_table_data_es = {
 
 static struct cpufreq_table_data sc8830t_cpufreq_table_data_es = {
 	.freq_tbl = {
-                {NOC, 1400000},
-                {UC1, 1200000},
-                {UC2, 1000000},
-                {UC3, SHARK_TDPLL_FREQUENCY},
+                {NOC, 1500000},
+                {UC1, 1350000},
+                {UC2, 900000},
+                {UC3, 768000},
                 {EC, CPUFREQ_TABLE_END},
 	},
 	.vddarm_mv = {
-                [NOC] = 1050000,
+                [NOC] = 1100000,
                 [UC1] = 1000000,
                 [UC2] = 900000,
                 [UC3] = 900000,
