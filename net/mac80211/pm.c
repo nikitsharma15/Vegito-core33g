@@ -106,6 +106,7 @@ int __ieee80211_suspend(struct ieee80211_hw *hw, struct cfg80211_wowlan *wowlan)
 		    sdata->vif.type == NL80211_IFTYPE_MONITOR)
 			continue;
 
+		flush_delayed_work(&sdata->dec_tailroom_needed_wk);
 		drv_remove_interface(local, sdata);
 	}
 
