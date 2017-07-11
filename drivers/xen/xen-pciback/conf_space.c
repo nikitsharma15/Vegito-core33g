@@ -260,7 +260,7 @@ int xen_pcibk_config_write(struct pci_dev *dev, int offset, int size, u32 value)
 		 * This means that some fields may still be read-only because
 		 * they have entries in the config_field list that intercept
 		 * the write and do nothing. */
-		if (dev_data->permissive || permissive) {
+		if (dev_data->permissive || xen_pcibk_permissive) {
 			switch (size) {
 			case 1:
 				err = pci_write_config_byte(dev, offset,

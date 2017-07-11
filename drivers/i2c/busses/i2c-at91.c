@@ -368,6 +368,7 @@ static int at91_do_twi_transfer(struct at91_twi_dev *dev)
 {
 	int ret;
 	bool has_unre_flag = dev->pdata->has_unre_flag;
+	unsigned sr;
 
 	dev_dbg(dev->dev, "transfer: %s %d bytes.\n",
 		(dev->msg->flags & I2C_M_RD) ? "read" : "write", dev->buf_len);
@@ -375,13 +376,16 @@ static int at91_do_twi_transfer(struct at91_twi_dev *dev)
 	INIT_COMPLETION(dev->cmd_complete);
 	dev->transfer_status = 0;
 
+	/* Clear pending interrupts, such as NACK. */
+	sr = at91_twi_read(dev, AT91_TWI_SR);
+
 	if (!dev->buf_len) {
 		at91_twi_write(dev, AT91_TWI_CR, AT91_TWI_QUICK);
 		at91_twi_write(dev, AT91_TWI_IER, AT91_TWI_TXCOMP);
 	} else if (dev->msg->flags & I2C_M_RD) {
 		unsigned start_flags = AT91_TWI_START;
 
-		if (at91_twi_read(dev, AT91_TWI_SR) & AT91_TWI_RXRDY) {
+		if (sr & AT91_TWI_RXRDY) {
 			dev_err(dev->dev, "RXRDY still set!");
 			at91_twi_read(dev, AT91_TWI_RHR);
 		}

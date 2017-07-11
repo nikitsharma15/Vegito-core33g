@@ -265,7 +265,6 @@ enum dlm_status dlmconvert_remote(struct dlm_ctxt *dlm,
 				  struct dlm_lock *lock, int flags, int type)
 {
 	enum dlm_status status;
-	u8 old_owner = res->owner;
 
 	mlog(0, "type=%d, convert_type=%d, busy=%d\n", lock->ml.type,
 	     lock->ml.convert_type, res->state & DLM_LOCK_RES_IN_PROGRESS);
